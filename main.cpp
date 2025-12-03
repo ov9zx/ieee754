@@ -5,31 +5,30 @@
 using namespace std;
 
 int main() {
-    float A;
-    cout << "A: ";
-    cin >> A;
+double a;
+unsigned int  ieee ;
+    cout << "a: ";
 
-    unsigned int S, E, M, F;
-    int k;
-    if (A == 0.0f) {
-        F = 0;
-        cout << "A= 0." << endl;
-        cout << " (IEEE 754): " << bitset<32>(F) << endl;
-    }
-    else {
-        S = (A < 0) ? 1 : 0;
-        k = log2(abs(A));
-        E = k + 127;
-        float R = (abs(A) / pow(2, k)) - 1.0f;
-        M = (R * pow(2, 23));
-        F = (S << 31) | (E << 23) | M;
-        cout << " (S): " << S << endl;
-        cout << " (k): " << k << endl;
-        cout << " (E = k + 127): " << E << endl;
-        cout << " (M): " << M << endl;
-        cout << " F (bites): " << bitset<32>(F) << endl;
-        cout << "Hex:    " << hex << uppercase << F << endl;
-    }
+    cin >> a;
+    int S ;
+
+    if(a<0) {S=1; a = -a;} else {S = 0;}
+
+    int b = int (a);
+    double f = a-b;
+    int k = 0;
+
+    int temp = b;
+
+    while (temp>0){k++; temp/= 2; }
+    int E = k-1+127;
+    float M = (a/pow(2,k-1)) - 1 ;
+    cout<<S<<"  "<<b<<"  "<<f<<"  "<<E<<"  "<<M<<endl;
+    cout<<"-------------------------------------"<<endl;
+
+
+   ieee = (S << 31) | (E << 23) | (int)(M * pow(2, 23));
+    cout<<ieee;
 
     return 0;
 }
