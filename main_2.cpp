@@ -1,33 +1,29 @@
 #include <iostream>
 #include <cmath>
-using namespace std;
+
+using namespace std; 
 
 int main() {
-    unsigned int ieee;
+    unsigned int r; 
     cout << "ieee: ";
-    cin >> ieee;
+    cin >> r;
 
-    unsigned int S = (ieee >> 31);
-    unsigned int E = (ieee >> 23) & 255;
-    unsigned int M = ieee & 8388607;
-    float result;
-    if (E == 0) {
+    unsigned int s = (r >> 31);
+    unsigned int e = (r >> 23) & 255;
+    unsigned int m = r & 8388607;
 
-        result = pow(-1, S) * pow(2, -126) * (M / 8388608.0);
+    double a; 
+
+    if (e == 0) {
+        
+        a = pow(-1, s) * pow(2, -126) * (m / 8388608.0);
     } else {
-
-        result = pow(-1, S) * pow(2, E - 127) * (1.0 + M / 8388608.0);
+        
+        a = pow(-1, s) * pow(2, (int)e - 127) * (1.0 + (double)m / 8388608.0);
     }
 
-    cout << "S: " << S << " E: " << E << " M: " << M << endl;
-    cout << "IEEE 754: " << ieee << " -> " << result << endl;
+    cout << "s: " << s << " e: " << e << " m: " << m << endl;
+    cout << "Result: " << a << endl; 
 
     return 0;
 }
-
-//1125883904_155.625
-
-
-//3273367552_-155.625
-
-//
