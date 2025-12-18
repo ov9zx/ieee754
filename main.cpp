@@ -2,48 +2,49 @@
 #include <cmath>
 #include <bitset>
 
-using namespace std; // Here is the namespace you requested! ✅
+using namespace std; 
 
 int main() {
-    double a;
-    unsigned int ieee;
+    double a; 
+    unsigned int r; 
+    
     cout << "a: ";
-
     cin >> a;
-    int S;
-
-    if (a < 0) { S = 1; a = -a; } 
-    else { S = 0; }
-
-    int E;
-    unsigned int M_small; 
 
    
-    if (a < pow(2, -126)) {
-        E = 0;              
-        M_small = a * pow(2, 149); 
-    } 
-    else {
-        
-        int b = int(a);
-        double f = a - b;
-        int k = 0;
-        int temp = b;
+    int s, e;
+    unsigned int m;
 
-        while (temp > 0) { k++; temp /= 2; }
-        
-        E = k - 1 + 127;
-        float M = (a / pow(2, k - 1)) - 1;
-        M_bits = (int)(M * pow(2, 23));
-        
-        cout << S << "  " << b << "  " << f << "  " << E << "  " << M << endl;
+    
+    if (a < 0) { s = 1; a = -a; } 
+    else { s = 0; }
+
+  
+    double L = pow(2, -126); // Limit
+
+    if (a > 0 && a < L) {
+      
+        e = 0;
+        m = a * pow(2, 149); // m = a * 2^149
+    } 
+    else if (a == 0) {
+        e = 0;
+        m = 0;
+    }
+    else {
+       
+        int k = floor(log2(a)); 
+        e = k + 127;
+        double f = (a / pow(2, k)) - 1; 
+        m = f * pow(2, 23);
     }
 
-    cout << "-------------------------------------" << endl;
+    r = (s << 31) | (e << 23) | (m & 0x7FFFFF);
 
-    ieee = (S << 31) | (E << 23) | M_bits;
-    cout << "Result: " << ieee << endl;
-    cout << "Binary: " << bitset<32>(ieee) << endl;
+    cout << "-------------------------------------" << endl;
+    cout << "s: " << s << " e: " << e << " m: " << m << endl;
+    cout << "Result: " << r << endl;
+    cout << "Bits: " << bitset<32>(r) << endl;
 
     return 0;
 }
